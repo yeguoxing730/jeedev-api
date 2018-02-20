@@ -1,0 +1,36 @@
+step1:
+go get -u github.com/astaxie/beego
+go get -u github.com/beego/bee
+add C:\GOWorkspace\bin to path
+step2;
+go get github.com/go-sql-driver/mysql
+go install github.com/go-sql-driver/mysql
+##
+##bee new webappname
+##bee api webapiname
+
+step3: create db
+CREATE DATABASE IF NOT EXISTS jeedev DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+DROP TABLE IF EXISTS `app`;
+CREATE TABLE `app` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_date` datetime NOT NULL,
+  `app_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `app_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `publish_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `app_code` (`app_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `app` VALUES ('1', NOW(), '100000', '神庙逃亡', '2015-08-06');
+INSERT INTO `app` VALUES ('2', NOW(), '100001', '愤怒的小鸟', '2015-08-06');
+step4:create restful web api APP
+bee api jeedev-api -conn="root:Welcome1@tcp(127.0.0.1:3306)/jeedev"
+step5:
+cd jeedev-api
+bee generate docs
+step6:run
+bee run watchall true
+tips:
+1.Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.
+SET SQL_SAFE_UPDATES = 0;
+2.
